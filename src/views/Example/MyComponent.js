@@ -1,10 +1,12 @@
 import React from 'react';
 
+// import component con
+import ChildComponent from './ChildComponent';
+
 // đặt tên class giống tên file
 
 class MyComponent extends React.Component {
     /* shift + Alt + A để tạo ra cmt khối */
-
     /* 
     *
     * JSX : return block
@@ -12,52 +14,75 @@ class MyComponent extends React.Component {
     * state: những dữ liệu có thể thay đổi, giúp cần cập nhập dữ liệu mà không cần phải load lại trang. Khi giá trị của state thay đổi thì JSX tự động thay đổi. 
     * 
     */
+
     // KEY: VALUE
     // state như một object
     state = {
-        name: 'Hieu',
-        channel: 'sts_Hieu'
+        firstName: '',
+        lastName: ''
     }
 
-    // trong vi du duoi kia
-    handleOnChangeName = (event) => {
+    // envent change first name
+    handleChangeFirstName = (event) => {
         this.setState({
-            name: event.target.value
+            firstName: event.target.value
         })
     }
-
-    // arrow function
-    handleClickButton = () => {
-        alert('click me !')
+    // event change last name
+    handleChangeLastName = (event) => {
+        this.setState({
+            lastName: event.target.value
+        })
+    }
+    // arrow function submit
+    handleSubmit = (event) => {
+        event.preventDefault() // hàm này ngăn chặn việc load lại website 
+        console.log(">>> check data input: ", this.state)
     }
 
-    render() {
-        //let name = 'Hieu';
 
+    // re-render when setState
+    render() {
+        console.log('>>> render', this.state)
         // hàm return phải return về MỘT khối code. 
         return (
             <>
-                <div className='first'>
-                    {/* khi muốn dùng javaScript thì mở ngoặc nhọn {} */}
-                    {/* Hello my Component, My name is {this.state.name} */}
+                {/* tạo một form  */}
+                <form action="/action_page.php">
+                    <label htmlFor="fname">First name:</label>
+                    <br />
 
-                    {/* một ví dụ nhỏ về state */}
-
-                    <input value={this.state.name} type='text'
-                        onChange={(event) => this.handleOnChangeName(event)}
+                    <input
+                        type="text"
+                        value={this.state.firstName}
+                        onChange={(event) => this.handleChangeFirstName(event)}
                     />
-                    My name is {this.state['name']}
-                    {/* CACH 2 */}
-                    {/* Hello my Component, My name is {this.state['name']} */}
-                </div>
+                    <br />
+                    <label htmlFor="lname">Last name:</label>
+                    <br />
 
-                <div className='second'>
-                    My tiktok channel : {this.state.channel}
-                </div>
+                    <input
+                        type="text"
+                        value={this.state.lastName}
+                        onChange={(event) => this.handleChangeLastName(event)}
+                    />
+                    <br /><br />
 
-                <div className='third'>
-                    <button onClick={() => { this.handleClickButton() }}> Click me </button>
-                </div>
+                    <input type="submit"
+                        onClick={(event) => this.handleSubmit(event)}
+                    />
+                </form>
+
+                <ChildComponent
+                    // name là một props
+                    // cú pháp: tên biến hoặc thuộc tính = { 'data' }
+                    name={'child 1'}
+                    age={'23'}
+
+                />
+
+                {/* <ChildComponent name={'child 2'} />
+                <ChildComponent name={'child 3'} /> */}
 
             </>
         )
