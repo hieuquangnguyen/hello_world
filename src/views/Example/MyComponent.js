@@ -3,7 +3,6 @@ import React from 'react';
 // đặt tên class giống tên file
 
 class MyComponent extends React.Component {
-
     /* shift + Alt + A để tạo ra cmt khối */
 
     /* 
@@ -25,6 +24,11 @@ class MyComponent extends React.Component {
         this.setState({
             name: event.target.value
         })
+    }
+
+    // arrow function
+    handleClickButton = () => {
+        alert('click me !')
     }
 
     render() {
@@ -50,6 +54,11 @@ class MyComponent extends React.Component {
                 <div className='second'>
                     My tiktok channel : {this.state.channel}
                 </div>
+
+                <div className='third'>
+                    <button onClick={() => { this.handleClickButton() }}> Click me </button>
+                </div>
+
             </>
         )
     }// end component
