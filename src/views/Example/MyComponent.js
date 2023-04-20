@@ -19,7 +19,14 @@ class MyComponent extends React.Component {
     // state như một object
     state = {
         firstName: '',
-        lastName: ''
+        lastName: '',
+        address: '',
+        arrJobs: [
+            { id: '1', tittle: 'Developer', salary: '500' },
+            { id: '2', tittle: 'Tester', salary: '400' },
+            { id: '3', tittle: 'Project Manager', salary: '1000' }
+
+        ]
     }
 
     // envent change first name
@@ -76,8 +83,10 @@ class MyComponent extends React.Component {
                 <ChildComponent
                     // name là một props
                     // cú pháp: tên biến hoặc thuộc tính = { 'data' }
-                    name={'child 1'}
+                    name={this.state.firstName}
                     age={'23'}
+                    address={'Da Nang'}
+                    arrayJobs={this.state.arrJobs}
 
                 />
 
