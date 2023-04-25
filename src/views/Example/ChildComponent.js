@@ -18,6 +18,11 @@ class ChildComponent extends React.Component {
     }
 
 
+    handleOnclickDelete = (Job) => {
+        console.log('>> handleOnclickDelete', Job)
+        this.props.deleteAJob(Job)
+    }
+
     // re-render when setState
     render() {
         // this.props kiem tra duoc cai data từ thèn cha truyền xuống
@@ -29,11 +34,16 @@ class ChildComponent extends React.Component {
         // let age = this.props.age;
 
         //c2
-        let { name, age, address, arrayJobs } = this.props; // đặt tên biến giống y key trong object thì mới đc
+        //let { name, age, address, arrayJobs } = this.props; // đặt tên biến giống y key trong object thì mới đc
+        let { arrayJobs } = this.props;
         let { showJobs } = this.state;
 
         // sử dụng cú pháp điều kiện, tối ưu code
         // let check = showJobs === true ? 'showJobs = true' : 'showJobs = false';
+
+
+
+
 
         return (
             <>
@@ -41,10 +51,11 @@ class ChildComponent extends React.Component {
                 {/* This is a Child Component : {this.props.name} - {this.props.age} year old */}
                 {/*  showJobs === true && khi sử dụng các dấu điều kiện thì phải có  <> </> | && ở đây có nghĩa là khi cái đó đúng thì thực hiện những cái phía sau && */}
 
-                This is a Child Component : {name} - {age} year old - {address}
+                {/* This is a Child Component : {name} - {age} year old - {address} */}
                 {/* sau operator thì phải dùng <> </> */}
                 {showJobs === false ?
                     <>
+                        <br />
                         <div>
                             <button onClick={() => this.handleShowHide()}> Show </button>
                         </div>
@@ -55,9 +66,13 @@ class ChildComponent extends React.Component {
                             {
                                 arrayJobs.map((item, index) => {
                                     return (
-                                        <div key={item.id}>
-                                            {item.tittle} - {item.salary} $
-                                        </div>
+                                        <>
+                                            <div key={item.id}>
+                                                {item.title} - {item.salary} $
+                                                <button onClick={() => this.handleOnclickDelete(item)}> Xóa Job</button>
+                                            </div>
+
+                                        </>
                                     )
                                 })
                             }

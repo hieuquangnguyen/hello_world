@@ -3,6 +3,8 @@ import React from 'react';
 // import component con
 import ChildComponent from './ChildComponent';
 
+import AddComponent from './AddComponent';
+
 // đặt tên class giống tên file
 
 class MyComponent extends React.Component {
@@ -18,35 +20,42 @@ class MyComponent extends React.Component {
     // KEY: VALUE
     // state như một object
     state = {
-        firstName: '',
-        lastName: '',
-        address: '',
         arrJobs: [
-            { id: '1', tittle: 'Developer', salary: '500' },
-            { id: '2', tittle: 'Tester', salary: '400' },
-            { id: '3', tittle: 'Project Manager', salary: '1000' }
+            { id: '1', title: 'Developer', salary: '500' },
+            { id: '2', title: 'Tester', salary: '400' },
+            { id: '3', title: 'Project Manager', salary: '1000' }
 
         ]
     }
 
-    // envent change first name
-    handleChangeFirstName = (event) => {
+    addNewJob = (Job) => {
+        console.log('check job from parent: ', Job)
+        //c1
+        let currentJobs = this.state.arrJobs;
+        currentJobs.push(Job);
+
+        //
         this.setState({
-            firstName: event.target.value
+            //c1
+            arrJobs: currentJobs
+
+            //c2
+            // [] tạo array
+            // ... toán tử coppy
+            // job kiểu là một phần tử mới
+            //arrJobs: [...this.state.arrJobs, Job]
+
         })
-    }
-    // event change last name
-    handleChangeLastName = (event) => {
-        this.setState({
-            lastName: event.target.value
-        })
-    }
-    // arrow function submit
-    handleSubmit = (event) => {
-        event.preventDefault() // hàm này ngăn chặn việc load lại website 
-        console.log(">>> check data input: ", this.state)
     }
 
+    deleteAJob = (job) => {
+        let currentJobs = this.state.arrJobs;
+        currentJobs = currentJobs.filter(item => item.id !== job.id);
+
+        this.setState({
+            arrJobs: currentJobs
+        })
+    }
 
     // re-render when setState
     render() {
@@ -54,40 +63,21 @@ class MyComponent extends React.Component {
         // hàm return phải return về MỘT khối code. 
         return (
             <>
-                {/* tạo một form  */}
-                <form action="/action_page.php">
-                    <label htmlFor="fname">First name:</label>
-                    <br />
+                <AddComponent
 
-                    <input
-                        type="text"
-                        value={this.state.firstName}
-                        onChange={(event) => this.handleChangeFirstName(event)}
-                    />
-                    <br />
-                    <label htmlFor="lname">Last name:</label>
-                    <br />
+                    // truyền props sang con
+                    addNewJob={this.addNewJob} // vi addNewJob có thuộc tính Job nên chúng ta khi truyen khong co dau () addNewJob = {this.addNewJob()}
 
-                    <input
-                        type="text"
-                        value={this.state.lastName}
-                        onChange={(event) => this.handleChangeLastName(event)}
-                    />
-                    <br /><br />
-
-                    <input type="submit"
-                        onClick={(event) => this.handleSubmit(event)}
-                    />
-                </form>
+                />
 
                 <ChildComponent
                     // name là một props
                     // cú pháp: tên biến hoặc thuộc tính = { 'data' }
-                    name={this.state.firstName}
-                    age={'23'}
-                    address={'Da Nang'}
+                    // name={this.state.firstName}
+                    // age={'23'}
+                    // address={'Da Nang'}
                     arrayJobs={this.state.arrJobs}
-
+                    deleteAJob={this.deleteAJob}
                 />
 
                 {/* <ChildComponent name={'child 2'} />
